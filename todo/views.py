@@ -24,12 +24,14 @@ def delete_task(request, pk):
     return redirect('home')
 
 def edit_task(request, pk):
-    task = get_object_or_404(Task, pk=pk)
+    get_task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
-        task.task = request.POST['task']
-        task.save()
+        new_task = request.POST['task']
+        get_task.task = new_task
+        get_task.save()
         return redirect('home')
-    context = {
-        'task': task,
-    }
-    return render(request, 'edit_task.html', context)
+    else:
+        context = {
+            'get_task': get_task,
+        }
+        return render(request, 'edit_task.html', context)
